@@ -1,0 +1,188 @@
+#include <Servo.h>
+#include "HX711.h"
+#define DOUT 6
+#define CLK 5
+
+HX711 scale(DOUT,CLK);
+
+Servo motor;
+Servo servo2;
+const int trig=2;
+const int echo=3;
+float distance;
+float y;
+int pin1=12;
+int pin2=11;
+int pin3=10;
+int pin4=9; 
+int sensor=4;
+int i,j;
+int x;
+float current_weight;
+float scale_factor;
+void setup() {
+    Serial.begin(9600);
+    scale.set_scale();
+   scale.tare();
+
+  pinMode(sensor,INPUT);
+  pinMode (trig,OUTPUT);
+  pinMode (echo,INPUT);
+  pinMode (12,OUTPUT);
+   pinMode (11,OUTPUT);
+    pinMode (10,OUTPUT);
+     pinMode (9,OUTPUT);
+     servo2.attach(13);
+     motor.attach(8);
+     
+}
+
+void loop() {
+   digitalWrite(trig,LOW);
+  delayMicroseconds(5);
+  digitalWrite(trig,HIGH);
+   delayMicroseconds(10);
+     digitalWrite(trig,LOW);
+distance=pulseIn(echo,HIGH);
+ float current_weight=scale.get_units(20);
+  float scale_factor=(current_weight/3000);
+//y=x/2/29.4;
+y=distance/57;
+Serial.println(y);
+if (y<=10)
+ { 
+  motor.write(150);
+  delay(1000);  }
+else{
+  motor.write(0);
+  delay(100);
+}
+ if(Serial.available()){
+  x=digitalRead(sensor);
+ //x=Serial.read();
+// Serial.println(x);
+ delay(300);
+ // float current_weight=scale.get_units(20);
+  //float scale_factor=(current_weight/3000);
+  if(x==49)
+  {
+//digitalWrite(pin4,HIGH);
+  //  digitalWrite(pin3,LOW);
+    //digitalWrite(pin2,LOW);
+    //digitalWrite(pin1,LOW);
+    //delay(5);
+   // digitalWrite(pin1,HIGH);
+    //digitalWrite(pin2,LOW);
+   // digitalWrite(pin3,LOW);
+    //digitalWrite(pin4,LOW);
+    //delay(5);
+     //digitalWrite(pin1,LOW);
+     // digitalWrite(pin2,LOW);
+     // digitalWrite(pin3,LOW);
+     // digitalWrite(pin4,LOW);
+   for(i=0;i<50;i++){
+ servo2.write(i);
+   delay(10);}
+   for(j=50;j>0;j--){
+    servo2.write(j);
+    delay(10);}
+ // digitalWrite(pin4,HIGH);
+   //digitalWrite(pin3,LOW);
+   // digitalWrite(pin2,LOW);
+    //digitalWrite(pin1,LOW);
+    //delay(5);
+     
+
+  
+    }
+   float current_weight=scale.get_units(20);
+  float scale_factor=(current_weight/3000);
+  Serial.print(scale_factor);
+   // else{ 
+     // servo2.write(0);
+      //digitalWrite(pin1,LOW);
+      //digitalWrite(pin2,LOW);
+      //digitalWrite(pin3,LOW);
+      //digitalWrite(pin4,LOW);
+    //}
+ }
+ else if(scale_factor<=15){
+    // digitalWrite(pin1,HIGH);
+   // digitalWrite(pin2,LOW);
+    //digitalWrite(pin3,LOW);
+    //digitalWrite(pin4,LOW);
+    //delay(5);
+    //digitalWrite(pin1,LOW);
+     // digitalWrite(pin2,HIGH);
+     // digitalWrite(pin3,LOW);
+      //digitalWrite(pin4,LOW);
+     // delay(5);
+    // digitalWrite(pin1,LOW);
+     // digitalWrite(pin2,LOW);
+     // digitalWrite(pin3,LOW);
+     // digitalWrite(pin4,LOW);
+  // for(i=0;i<50;i++){
+   // servo2.write(i);
+    //delay(10);}
+   //for(j=50;j>0;j--){
+    //servo2.write(j);
+    //delay(10);}
+    
+      //digitalWrite(pin1,HIGH);
+      //digitalWrite(pin2,LOW);
+      /*digitalWrite(pin3,LOW);
+      digitalWrite(pin4,LOW);
+      delay(5);
+  digitalWrite(pin4,HIGH);
+   digitalWrite(pin3,LOW);
+    digitalWrite(pin2,LOW);
+    digitalWrite(pin1,LOW);
+    delay(5);*/
+     
+    }
+  else if(scale_factor>15){
+     /*digitalWrite(pin1,HIGH);
+    digitalWrite(pin2,LOW);
+    digitalWrite(pin3,LOW);
+    digitalWrite(pin4,LOW);
+    delay(5);
+    digitalWrite(pin1,LOW);
+      digitalWrite(pin2,HIGH);
+      digitalWrite(pin3,LOW);
+      digitalWrite(pin4,LOW);
+      delay(5);
+       digitalWrite(pin1,LOW);
+      digitalWrite(pin2,LOW);
+      digitalWrite(pin3,HIGH);
+      digitalWrite(pin4,LOW);
+      delay(5);
+     digitalWrite(pin1,LOW);
+      digitalWrite(pin2,LOW);
+      digitalWrite(pin3,LOW);
+      digitalWrite(pin4,LOW);*/
+   for(i=0;i<50;i++){
+    servo2.write(i);
+    delay(10);}
+   for(j=50;j>0;j--){
+    servo2.write(j);
+    delay(10);}
+     /*digitalWrite(pin1,LOW);
+      digitalWrite(pin2,HIGH);
+      digitalWrite(pin3,LOW);
+      digitalWrite(pin4,LOW);
+      delay(5);
+      digitalWrite(pin1,HIGH);
+      digitalWrite(pin2,LOW);
+      digitalWrite(pin3,LOW);
+      digitalWrite(pin4,LOW);
+      delay(5);
+  digitalWrite(pin4,HIGH);
+   digitalWrite(pin3,LOW);
+    digitalWrite(pin2,LOW);
+    digitalWrite(pin1,LOW);
+    delay(5);*/
+     
+    }
+    }
+
+  
